@@ -45,6 +45,7 @@ get_filename_component(QT_LIB_DIR ${QT_LIBRARY_PATH} DIRECTORY)
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH};${QT_LIB_DIR}")
 
 add_definitions(-DQT5)
+add_definitions(-DQT_DEPRECATED_WARNINGS)
 
 add_subdirectory(parser)
 add_subdirectory(qdlt)
