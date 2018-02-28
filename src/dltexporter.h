@@ -6,6 +6,8 @@
 #include <QModelIndexList>
 #include <QTreeWidget>
 
+#include <memory>
+
 #include "qdlt.h"
 
 class DltExporter : public QObject
@@ -17,33 +19,6 @@ public:
     typedef enum { FormatDlt,FormatAscii,FormatCsv,FormatClipboard,FormatDltDecoded,FormatUTF8} DltExportFormat;
 
     typedef enum { SelectionAll,SelectionFiltered,SelectionSelected } DltExportSelection;
-
-private:
-
-    /* Add double quotes to a value.
-     * Also escape any exiting double quotes with another double quote.
-     * \param arg string to escape
-     * \return QString which is escaped version of arg
-     */
-    QString escapeCSVValue(QString arg);
-
-    /* Write the first line of CSV. This is just the names of the fields
-     * \param file outputfile to write to
-     * \return True if writing was succesfull, false if error occured
-     */
-    bool writeCSVHeader(QFile *file);
-
-    /* Write the message out to an open file
-     * \param index True index to QDltFile of the message
-     * \param to File to write to
-     * \param msg msg to get the data from
-     */
-    void writeCSVLine(int index, QFile *to, QDltMsg msg);
-
-    bool start();
-    bool finish();
-    bool getMsg(int num, QDltMsg &msg, QByteArray &buf);
-    bool exportMsg(int num, QDltMsg &msg,QByteArray &buf);
 
 public:
 
@@ -67,17 +42,6 @@ public:
 signals:
     
 public slots:
-    
-private:
-    int size;
-    QDltFile *from;
-    QFile *to;
-    QString clipboardString;
-    QDltPluginManager *pluginManager;
-    QModelIndexList *selection;
-    QList<int> selectedRows;
-    DltExporter::DltExportFormat exportFormat;
-    DltExporter::DltExportSelection exportSelection;
 };
 
 #endif // DLTEXPORTER_H
